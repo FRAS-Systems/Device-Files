@@ -17,7 +17,7 @@ filename = 'AttendanceData/ClassList.txt'
 blob = bucket.blob(filename)
 csv_string = blob.download_as_string().decode('utf-8')
 print(csv_string)
-for name in csv_string.split('/'):
+for name in csv_string.split(','):
     classlist.append(name)
 
 print(classlist)
