@@ -21,6 +21,7 @@ for name in csv_string.split(','):
     classlist.append(name)
 
 print(classlist)
+os.mkdir(/home/fras/Desktop/device-files/Facial_Recognition/dataset)
 
 for name in classlist:
     filename = 'AttendanceData/photo-dataset/' + name
