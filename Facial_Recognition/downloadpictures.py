@@ -28,15 +28,16 @@ print('downloading pictures')
 for name in classlist:
     filename1 = 'AttendanceData/photo-dataset/' + name
     newdir = '/home/fras/Desktop/device-files/Facial_Recognition/dataset/' + name
+    print('downloading pictures for ' + name + " at: " + filename1)
     if not os.path.isdir(newdir):
         os.mkdir(newdir)
     x = 1
     while x <= 10:
         print('downloading pictures: ' + str(x) + '/10')
         filename = filename1 + '/Photo-' + str(x) + '.jpeg'
-        
+
         blob = bucket.blob(filename)
-        blob.download_to_filename("attendancedata.txt")
+        blob.download_to_filename("dataset/" + name + '/' + 'Photo-' + str(x) + ".jpg")
         x += 1
 
 os.system("python /home/fras/Desktop/device-files/Facial_Recognition/train_model.py")
