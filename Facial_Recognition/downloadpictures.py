@@ -20,16 +20,23 @@ print(csv_string)
 for name in csv_string.split(','):
     classlist.append(name)
 
-print(classlist)
-if not os.path.isdir('/home/fras/Desktop/device-files/Facial_Recognition/dataset'):
-    os.mkdir('/home/fras/Desktop/device-files/Facial_Recognition/dataset')
-    
+print(print('retrieved classlist: ' + str(classlist)))
+if not os.path.isdir('/home/fras/Desktop/device-files/Facial_Recognition/dataset/'):
+    os.mkdir('/home/fras/Desktop/device-files/Facial_Recognition/dataset/')
+
+print('downloading pictures')
 for name in classlist:
-    filename = 'AttendanceData/photo-dataset/' + name
+    filename1 = 'AttendanceData/photo-dataset/' + name
     newdir = '/home/fras/Desktop/device-files/Facial_Recognition/dataset/' + name
     if not os.path.isdir(newdir):
         os.mkdir(newdir)
-    blob = bucket.blob(filename)
-    blob.download_to_filename("attendancedata.txt")
+    x = 1
+    while x <= 10:
+        print('downloading pictures: ' + str(x) + '/10')
+        filename = filename1 + '/Photo-' + str(x) + '.jpeg'
+        
+        blob = bucket.blob(filename)
+        blob.download_to_filename("attendancedata.txt")
+        x += 1
 
 os.system("python /home/fras/Desktop/device-files/Facial_Recognition/train_model.py")
