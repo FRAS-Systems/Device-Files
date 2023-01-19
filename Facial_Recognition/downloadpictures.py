@@ -3,7 +3,7 @@ import firebase_admin
 from firebase_admin import credentials, storage
 
 # Set up the Firebase Storage client
-cred = credentials.Certificate("fras-systems-web-firebase-adminsdk-358l4-d9ea74c356.json")
+cred = credentials.Certificate("fras-systems-web-firebase-adminsdk-358l4-39aa9f6232.json")
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'fras-systems-web.appspot.com'
 })
