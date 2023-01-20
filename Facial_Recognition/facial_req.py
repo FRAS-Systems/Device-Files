@@ -20,13 +20,6 @@ firebase_admin.initialize_app(cred, {
 })
 bucket = storage.bucket()
 
-# Create an access token
-filename = 'AttendanceData/AttendanceData.txt'
-blob = bucket.blob(filename)
-# Create an access token with a specific expiration time
-expiration = datetime.datetime.now() + datetime.timedelta(days=1)
-access_token = blob.generate_signed_url(expiration=expiration)
-
 # download file
 filename = 'AttendanceData/ClassList.txt'
 blob = bucket.blob(filename)
@@ -34,6 +27,13 @@ csv_string = blob.download_as_string().decode('utf-8')
 attendanceinfo = {}
 for name in csv_string.split(','):
     attendanceinfo.update({name: 'N/A'})
+
+# Create an access token
+filename = 'AttendanceData/AttendanceData.txt'
+blob = bucket.blob(filename)
+# Create an access token with a specific expiration time
+expiration = datetime.datetime.now() + datetime.timedelta(days=1)
+access_token = blob.generate_signed_url(expiration=expiration)
 
     # Initialize 'currentname' to trigger only when a new person is identified.
 currentname = "unknown"
@@ -99,7 +99,8 @@ while True:
             if currentname != name:
                 currentname = name
                 print(currentname)
-                attendanceinfo[name] = datetime.datetime.now()
+                time = datetime.datetime.now()
+                attendanceinfo[name] = str(time)
                 # upload the attendanceinfo dictionary to Firebase Storage
                 blob_to_upload = bucket.blob(filename)
                 blob_to_upload.upload_from_string(str(attendanceinfo))
@@ -135,4 +136,5 @@ print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 # do a bit of cleanup
 cv2.destroyAllWindows()
 vs.stop()
+
 
